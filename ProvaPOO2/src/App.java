@@ -1,10 +1,18 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Map.Entry;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 
 
 public class App {
+
+    private static final Collection<Produto> venda = null;
 
     public static void main(String[] args) throws Exception {
         
@@ -114,7 +122,14 @@ public class App {
                             for (Venda item :extracted2(lista_venda)) {
                                 System.out.println(item);
                             }
-                        }                       
+                        }
+                        
+                        Map<LocalDate, List<Venda>> vendasagrupadas = (Map<LocalDate, List<Venda>>) venda.stream();
+                        collect(Collectors.groupingBy(Venda::getDataVenda));
+
+                        vendasagrupadas.entrySet().forEach(list_venda -> System.out.printf("Data %s: - Venda: %s\n", ((Entry<LocalDate, List<Venda>>) lista_venda).getKey(), list_venda.getValue()));
+
+                        
                        
 
                     break;
@@ -156,6 +171,9 @@ public class App {
         }
         
     
+    }
+
+    private static void collect(Collector<Venda, ?, Map<String, List<Venda>>> groupingBy) {
     }
 
     private static List<Produto> extracted(List<Produto> lista_produto) {
